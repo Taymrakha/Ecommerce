@@ -6,7 +6,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useState } from "react";
-const ProductDetails = () => {
+const ProductDetails = ({ clickedProduct }) => {
     const [selectedImg, setselectedImg] = useState(0);
     return (
         <Box
@@ -20,20 +20,20 @@ const ProductDetails = () => {
             <Box sx={{ display: "flex" }}>
                 <img
                     width={360}
-                    src="src/images/1.jpg"
+                    src={clickedProduct.attributes.productImg.data[selectedImg].attributes.url}
                     alt=""
                 />
             </Box>
 
             <Box sx={{ py: 2, textAlign: { xs: "center", sm: "left" } }}>
                 <Typography variant="h5">
-                    sdsdsa
+                    {clickedProduct.attributes.productTitle}
                 </Typography>
                 <Typography my={0.4} fontSize={"22px"} color={"crimson"} variant="h6">
-                    $10.5
+                    ${clickedProduct.attributes.productPrice}
                 </Typography>
                 <Typography variant="body1">
-                    dsadsa
+                    {clickedProduct.attributes.productDescription}
                 </Typography>
 
                 <Stack
@@ -54,10 +54,10 @@ const ProductDetails = () => {
                             },
                         }}
                     >
-                        {["src/images/1.jpg", "src/images/2.jpg"].map((item, index) => {
+                        {clickedProduct.attributes.productImg.data.map((item, index) => {
                             return (
                                 <ToggleButton
-                                    key={item}
+                                    key={item.id}
                                     value={index}
                                     sx={{
                                         width: "110px",
@@ -68,13 +68,13 @@ const ProductDetails = () => {
                                     }}
                                 >
                                     <img
-                                        // onClick={() => {
-                                        //     setselectedImg(index);
-                                        // }}
+                                        onClick={() => {
+                                            setselectedImg(index);
+                                        }}
                                         style={{ borderRadius: 3 }}
                                         height={"100%"}
                                         width={"100%"}
-                                        src={item}
+                                        src={item.attributes.url}
                                         alt=""
                                     />
                                 </ToggleButton>
